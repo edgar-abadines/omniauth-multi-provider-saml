@@ -7,12 +7,11 @@ module OmniAuth
       class Handler
         attr_reader :path_prefix, :identity_provider_id_regex
 
-        def initialize(path_prefix: OmniAuth.config.path_prefix,
-                       identity_provider_id_regex: /\w+/, &identity_provider_options_generator)
+        def initialize(&identity_provider_options_generator)
           raise 'Missing provider options generator block' unless block_given?
 
-          @path_prefix = path_prefix
-          @identity_provider_id_regex = identity_provider_id_regex
+          @path_prefix = OmniAuth.config.path_prefix
+          @identity_provider_id_regex = /\w+/
           @identity_provider_options_generator = identity_provider_options_generator
 
           # Eagerly compute these since lazy evaluation will not be threadsafe
